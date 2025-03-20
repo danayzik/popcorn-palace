@@ -1,12 +1,14 @@
 package com.att.tdp.popcorn_palace.Services;
 
 import com.att.tdp.popcorn_palace.Entities.Movie;
+import com.att.tdp.popcorn_palace.Exceptions.IncorrectFieldException;
+import com.att.tdp.popcorn_palace.Exceptions.ResourceNotFoundException;
+import com.att.tdp.popcorn_palace.Exceptions.ResourceAlreadyExistsException;
 import com.att.tdp.popcorn_palace.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class MovieService{
@@ -14,35 +16,50 @@ public class MovieService{
     @Autowired
     private MovieRepository movieRepository;
 
-    public boolean existsByTitle(String title){
-        return movieRepository.existsByTitle(title);
-    }
 
-    public Movie create(Movie movie){
+    public Movie create(Movie movie) {
+        if (!movie.isValid()) {
+            throw new IncorrectFieldException("One or more fields are incorrect.");
+        }
+
+        if (movieRepository.existsByTitle(movie.getTitle())){
+            throw new ResourceAlreadyExistsException(String.format("Movie with title %s not found", movie.getTitle()));
+        }
 
         return movieRepository.saveAndFlush(movie);
     }
 
     public Movie getOne(String title){
-        Optional<Movie> movieOption = movieRepository.findByTitle(title);
-        return movieOption.orElse(null);
+        Movie movie = movieRepository.findByTitle(title).orElse(null);
+        if (movie == null) {
+            throw new ResourceNotFoundException(String.format("Movie with title %s not found", title));
+        }
+        return movie;
     }
+
 
     public List<Movie> getAll(){
         return movieRepository.findAll();
     }
 
-    public boolean update(Movie oldMovie, Movie newMovie){
-        oldMovie.patch(newMovie);
-        if(!newMovie.isValid())
-            return false;
-        movieRepository.saveAndFlush(oldMovie);
-        return true;
+    public void update(String oldTitle, Movie newMovie){
+        Movie oldMovie = movieRepository.findByTitle(oldTitle).orElse(null);
+        if (oldMovie == null) {
+            throw new ResourceNotFoundException(String.format("Movie with title %s not found",oldTitle));
+        }
+        if (!oldMovie.patch(newMovie)) {
+            throw new IncorrectFieldException("One or more fields are incorrect.");
+        }
+
     }
 
-    public boolean delete(long id){
-        movieRepository.deleteById(id);
-        return !movieRepository.existsById(id);
+    public boolean delete(String title){
+        if (!movieRepository.existsByTitle(title)){
+            throw new ResourceNotFoundException(String.format("Movie with title %s not found", title));
+        }
+        movieRepository.deleteByTitle(title);
+        return !movieRepository.existsByTitle(title);
+
     }
 
 
