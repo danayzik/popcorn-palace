@@ -9,30 +9,46 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="movies")
 public class Movie {
 
     @Column(unique = true)
+    @Getter
+    @Setter
     private String title = "";
 
+    @Getter
+    @Setter
     private String genre = "";
 
+    @Getter
+    @Setter
     private int duration = -1;
 
+    @Getter
+    @Setter
     private double rating = -1;
 
+    @Getter
+    @Setter
     private int releaseYear = -1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Getter
     private long id;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<Showtime> showtimes = new ArrayList<>();
 
 
 
@@ -42,6 +58,11 @@ public class Movie {
         this.rating = (movie.getRating() > 0) ? movie.getRating() : this.rating;
         this.releaseYear = (movie.getReleaseYear() > 0) ? movie.getReleaseYear() : this.releaseYear;
         return isValid();
+    }
+
+    @JsonIgnore
+    public List<Showtime> getShowtimes(){
+        return showtimes;
     }
 
 

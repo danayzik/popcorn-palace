@@ -50,8 +50,9 @@ public class MovieService{
         if (!oldMovie.patch(newMovie)) {
             throw new IncorrectFieldException("One or more fields are incorrect.");
         }
-
+        movieRepository.saveAndFlush(oldMovie);
     }
+
 
     public boolean delete(String title){
         if (!movieRepository.existsByTitle(title)){
