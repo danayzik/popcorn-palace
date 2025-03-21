@@ -64,6 +64,11 @@ public class Showtime {
     }
 
     @JsonIgnore
+    public void setMovie(Movie movie){
+        this.movie = movie;
+    }
+
+    @JsonIgnore
     public Showtime(Movie movie, ShowtimeDto showtimeDto) {
         this.movie = movie;
         this.endTime = showtimeDto.getEndTime();
