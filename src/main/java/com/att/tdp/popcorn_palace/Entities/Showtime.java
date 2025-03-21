@@ -49,7 +49,7 @@ public class Showtime {
     @Getter
     private long id;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Booking> bookings = new ArrayList<>();
 

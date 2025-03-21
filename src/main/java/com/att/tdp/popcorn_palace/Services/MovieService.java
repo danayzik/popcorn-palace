@@ -7,10 +7,13 @@ import com.att.tdp.popcorn_palace.Exceptions.ResourceAlreadyExistsException;
 import com.att.tdp.popcorn_palace.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 
 @Service
+@Transactional
 public class MovieService{
 
     @Autowired
@@ -29,6 +32,7 @@ public class MovieService{
         return movieRepository.saveAndFlush(movie);
     }
 
+    @Transactional(readOnly = true)
     public Movie getOne(String title){
         Movie movie = movieRepository.findByTitle(title).orElse(null);
         if (movie == null) {
@@ -37,7 +41,7 @@ public class MovieService{
         return movie;
     }
 
-
+    @Transactional(readOnly = true)
     public List<Movie> getAll(){
         return movieRepository.findAll();
     }
@@ -52,6 +56,7 @@ public class MovieService{
         }
         movieRepository.saveAndFlush(oldMovie);
     }
+
 
 
     public boolean delete(String title){

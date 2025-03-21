@@ -2,7 +2,6 @@ package com.att.tdp.popcorn_palace.Entities;
 
 
 import com.att.tdp.popcorn_palace.Dtos.BookingDto;
-import com.att.tdp.popcorn_palace.Dtos.ShowtimeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -38,7 +37,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID id;
+    private UUID bookingId;
 
     @JsonIgnore
     public Booking(Showtime showtime, BookingDto bookingDto) {
@@ -47,6 +46,7 @@ public class Booking {
         this.userId = bookingDto.getUserId();
     }
 
+    @JsonIgnore
     public boolean isValid(){
         return seatNumber>=0;
     }

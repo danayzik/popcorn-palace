@@ -27,7 +27,7 @@ public class ShowtimesService {
         Movie movie = movieRepository.findById(showtimeDto.getMovieId())
                 .orElseThrow(() -> new IncorrectFieldException("movieId not found."));
         boolean overlapExists = showtimeRepository.existsOverlappingShowtime(
-                showtimeDto.getTheater(), showtimeDto.getStartTime(), showtimeDto.getEndTime(), -1
+                showtimeDto.getTheater(), showtimeDto.getStartTime(), showtimeDto.getEndTime(), -1L
         );
         if(overlapExists)
             throw new IncorrectFieldException("The show has overlapping times with an existing showtime");
