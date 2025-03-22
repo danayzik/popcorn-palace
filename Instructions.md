@@ -12,10 +12,7 @@ Ensure you have the following installed:
   ```sh
   java -version
   ```
-- **Maven(Optional)**
-  ```sh
-  mvn -version
-  ```
+
 - **Docker & Docker Compose**
   ```sh
   docker --version
@@ -96,41 +93,34 @@ docker compose up -d
 
 ## **5. Building and Running the Application**
 
-### **With Maven**
-```sh
-mvn clean package
-mvn spring-boot:run
-```
+
 
 ### **With Mvnw script**
 Linux:
 ```sh
 ./mvnw spring-boot:run
 ```
+
 Windows:
-Linux:
 ```sh
 mvnw spring-boot:run
 ```
 
 ### **To run the test application**
-Maven:
-```sh
-mvn test
-```
+Linux:
 mvnw:
 ```sh
 ./mvnw test
 ```
-or:
+Windows:
 ```sh
 mvnw test
 ```
 
 
 ## **6. Testing API Endpoints**
-
 - **Check if the app is running:**
+- Open another cmd:
   ```sh
   telnet localhost 8080
   ```
