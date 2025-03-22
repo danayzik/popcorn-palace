@@ -11,14 +11,7 @@ import java.util.UUID;
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
 
-//    @Query("""
-//        SELECT COUNT(b) > 0 FROM Booking b
-//        WHERE b.showtime.id = :showtimeId
-//        AND b.seatNumber < :seatNumber
-//
-//    """)
-//    boolean existsOverlappingShowtime(@Param("seatNumber") int seatNumber,
-//                                      @Param("showtimeId") long showtimeId);
+
 
     boolean existsByShowtimeIdAndSeatNumber(long showtimeId, int seatNumber);
 }
