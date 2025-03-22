@@ -1,6 +1,11 @@
 
 # API Changes and Error Handling Documentation
 
+## Side note on efficiency:
+- Currently adding/updating a showtime costs O(n) where n is the number of showtimes. This is because the query is checking for overlap with each showtime.
+
+- This can be improved using btree_gist which leverages a balanced tree for overlap comparisons. But this is outside the scope of this assignment.
+
 ## Changes from Original API:
 - **POST requests to add an entry now return a `201 Created` status** instead of the previous `200 OK` status.
 
