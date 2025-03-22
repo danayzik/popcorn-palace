@@ -53,10 +53,11 @@ public class Movie {
 
 
     public boolean patch(Movie movie){
-        this.genre = !movie.getGenre().isBlank() ? movie.getGenre() : this.genre;
-        this.duration = (movie.getDuration() > 0) ? movie.getDuration() : this.duration;
-        this.rating = (movie.getRating() > 0) ? movie.getRating() : this.rating;
-        this.releaseYear = (movie.getReleaseYear() > 0) ? movie.getReleaseYear() : this.releaseYear;
+        this.genre = movie.getGenre();
+        this.duration = movie.getDuration();
+        this.rating = movie.getRating();
+        this.releaseYear = movie.getReleaseYear();
+        this.title = movie.getTitle();
         return isValid();
     }
 

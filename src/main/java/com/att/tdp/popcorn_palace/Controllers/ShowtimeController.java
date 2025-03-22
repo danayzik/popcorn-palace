@@ -29,13 +29,13 @@ public class ShowtimeController {
 
 
     @PostMapping("/update/{showtimeId}")
-    public ResponseEntity<Showtime> update(@PathVariable long showtimeId, @RequestBody ShowtimeDto showtimeDto) {
+    public ResponseEntity<Void> update(@PathVariable long showtimeId, @RequestBody ShowtimeDto showtimeDto) {
         showtimesService.update(showtimeDto , showtimeId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{showtimeId}")
-    public ResponseEntity<Showtime> delete(@PathVariable long showtimeId) {
+    public ResponseEntity<Void> delete(@PathVariable long showtimeId) {
         return showtimesService.delete(showtimeId) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }

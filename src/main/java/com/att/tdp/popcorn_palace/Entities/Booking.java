@@ -46,6 +46,8 @@ public class Booking {
         this.userId = bookingDto.getUserId();
     }
 
+
+
     @JsonIgnore
     public boolean isValid(){
         return seatNumber>=0;

@@ -48,7 +48,6 @@ public class ShowtimesService {
     }
 
 
-
     public void update(ShowtimeDto showtimeDto, long showtimeId){
         Showtime oldShowtime = showtimeRepository.findById(showtimeId).
                 orElseThrow(() -> new ResourceNotFoundException(String.format("Showtime with id %d not found", showtimeId)));
@@ -62,7 +61,7 @@ public class ShowtimesService {
             throw new IncorrectFieldException("One or more field values are incorrect.");
         oldShowtime.setMovie(newMovie);
         boolean overlapExists = showtimeRepository.existsOverlappingShowtime(
-                showtimeDto.getTheater(), showtimeDto.getStartTime(), showtimeDto.getEndTime(), showtimeId
+                oldShowtime.getTheater(), oldShowtime.getStartTime(), oldShowtime.getEndTime(), showtimeId
         );
         if(overlapExists)
             throw new IncorrectFieldException("The updated show has overlapping times with an existing showtime");

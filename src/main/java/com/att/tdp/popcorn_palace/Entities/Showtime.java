@@ -2,6 +2,7 @@ package com.att.tdp.popcorn_palace.Entities;
 
 
 import com.att.tdp.popcorn_palace.Dtos.ShowtimeDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -34,9 +35,11 @@ public class Showtime {
 
     @Getter
     @Setter
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     private Instant startTime;
     @Getter
     @Setter
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     private Instant endTime;
 
     @Getter
@@ -52,6 +55,8 @@ public class Showtime {
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Booking> bookings = new ArrayList<>();
+
+
 
 
     public long getMovieId(){
@@ -91,24 +96,10 @@ public class Showtime {
     }
 
     public boolean patch(ShowtimeDto showtimeDto){
-        this.theater = (showtimeDto.getTheater() != null && !showtimeDto.getTheater().isBlank())
-                ? showtimeDto.getTheater()
-                : this.theater;
-
-
-        this.startTime = (showtimeDto.getStartTime() != null)
-                ? showtimeDto.getStartTime()
-                : this.startTime;
-
-
-        this.endTime = (showtimeDto.getEndTime() != null)
-                ? showtimeDto.getEndTime()
-                : this.endTime;
-
-
-        this.price = (showtimeDto.getPrice() >= 0)
-                ? showtimeDto.getPrice()
-                : this.price;
+        this.theater = showtimeDto.getTheater();
+        this.startTime = showtimeDto.getStartTime();
+        this.endTime = showtimeDto.getEndTime();
+        this.price = showtimeDto.getPrice();
         return isValid();
     }
 

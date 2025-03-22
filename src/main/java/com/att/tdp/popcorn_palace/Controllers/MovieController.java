@@ -38,7 +38,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/{title}")
-    public ResponseEntity<Movie> delete(@PathVariable String title) {
+    public ResponseEntity<Void> delete(@PathVariable String title) {
         return movieService.delete(title) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }

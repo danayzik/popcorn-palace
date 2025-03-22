@@ -26,7 +26,7 @@ public class MovieService{
         }
 
         if (movieRepository.existsByTitle(movie.getTitle())){
-            throw new ResourceAlreadyExistsException(String.format("Movie with title %s not found", movie.getTitle()));
+            throw new ResourceAlreadyExistsException(String.format("Movie with title %s already exists", movie.getTitle()));
         }
 
         return movieRepository.saveAndFlush(movie);
